@@ -16,13 +16,19 @@ env.config();
 
 const app = express(); 
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://studymart-svk7.onrender.com",
+];
+
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -42,7 +48,7 @@ const httpServer = http.createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173"],
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -59,12 +65,12 @@ io.on("connection", (socket) => {
     console.log(`User ${userId} joined room ${conversationId}`);
   });
 
-socket.on("sendMessage", ({ conversationId, message }) => {
-  socket.to(conversationId).emit("receiveMessage", {
-    ...message,
-    conversationId,
+  socket.on("sendMessage", ({ conversationId, message }) => {
+    socket.to(conversationId).emit("receiveMessage", {
+      ...message,
+      conversationId,
+    });
   });
-});
 
   socket.on("disconnect", () => {
     console.log("🔴 A user disconnected:", socket.id);
