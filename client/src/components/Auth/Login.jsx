@@ -4,6 +4,7 @@ import { Loader } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const { login } = useAuth();
@@ -97,12 +98,12 @@ const Login = () => {
 
         <p className="text-sm text-center text-[#6B7280] mt-2">
           Not registered yet?{" "}
-          <a
-            href="/register"
+          <Link
+            to="/register"
             className="text-[#1DA1F2] hover:underline font-medium"
           >
             Sign up here
-          </a>
+          </Link>
         </p>
       </form>
     </div>
