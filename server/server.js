@@ -19,6 +19,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://studymart-svk7.onrender.com",
+  "https://study-mart-cyan.vercel.app",
 ];
 
 app.use(
